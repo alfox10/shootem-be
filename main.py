@@ -73,7 +73,8 @@ def get_lb():
         temp_lb['position'] = i
         result.append(temp_lb)
         i += 1
-    return jsonify(result)
+    resget = {'data':result}
+    return jsonify(resget)
 
 
 def run():
