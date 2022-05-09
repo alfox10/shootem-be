@@ -1,8 +1,9 @@
 from flask import Flask
 from threading import Thread
-from flask import jsonify, request
+from flask import jsonify, request, Response
 import sqlite3
 from sqlite3 import Error
+from requests.structures import CaseInsensitiveDict
 
 app = Flask('')
 
@@ -74,7 +75,9 @@ def get_lb():
         result.append(temp_lb)
         i += 1
     resget = {'data':result}
-    return jsonify(resget)
+    response = jsonify(resget)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 def run():
