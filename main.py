@@ -59,7 +59,9 @@ def home():
 def set_new_score():
     data = request.args
     insert_score(data['name'], data['score'])
-    return jsonify(data)
+    response = jsonify(data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/api/v1/leaderboard', methods=['GET'])
