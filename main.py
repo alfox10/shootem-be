@@ -26,6 +26,21 @@ def create_connection():
     except Error as e:
         print(e)
 
+def truncatelb():
+    global conn
+    if conn is None:
+        create_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM player")
+    conn.commit()
+  
+def truncatelbseq():
+    global conn
+    if conn is None:
+        create_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM SQLITE_SEQUENCE WHERE name='player'")
+    conn.commit()
 
 def return_best_player():
     global conn
@@ -60,6 +75,15 @@ def set_new_score():
     data = request.args
     insert_score(data['name'], data['score'])
     response = jsonify(data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route('/api/v1/clearlb', methods=['GET'])
+def clearlb():
+    truncatelb()
+    truncatelbseq()
+    res = {'clear':'ok'}
+    response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
