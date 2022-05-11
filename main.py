@@ -3,7 +3,6 @@ from threading import Thread
 from flask import jsonify, request, Response
 import sqlite3
 from sqlite3 import Error
-from requests.structures import CaseInsensitiveDict
 
 app = Flask('')
 
